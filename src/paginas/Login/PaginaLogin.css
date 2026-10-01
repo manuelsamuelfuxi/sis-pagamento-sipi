@@ -1,0 +1,246 @@
+:root {
+  --azul-escuro: #06153a;
+  --azul-medio: #0a2a6e;
+  --azul-botao: #0d3a9c;
+  --azul-tecla: #e6ecf8;
+  --azul-texto: #0b2a6b;
+  --ouro: #f5b82e;
+  --erro: #d6334f;
+
+  /* ===== Card do CARROSSEL ===== */
+  --carrossel-largura: 28rem;
+  --carrossel-altura: 20rem;
+
+  /* ===== Card do PIN / TECLADO ===== */
+  --pin-largura: 22rem;
+  --pin-padding: 1.7rem;
+  --teclado-largura: 20rem;
+
+  /* espaço entre os dois cards */
+  --espaco-cards: 7rem;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: var(--azul-escuro);
+}
+
+.login {
+  position: relative;
+  overflow: hidden;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 3vh, 2rem);
+  padding: clamp(0.9rem, 3vw, 2.2rem);
+  color: #fff;
+  background: radial-gradient(ellipse at 30% 0%, var(--azul-medio), var(--azul-escuro) 70%);
+}
+
+/* ---------- Cabeçalho ---------- */
+.topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.marca-sigla { font-size: clamp(1.6rem, 5vw, 2.2rem); font-weight: 800; letter-spacing: 0.04em; }
+.marca-divisor { width: 2px; height: 2.2rem; background: var(--ouro); }
+.marca-nome { font-size: clamp(0.6rem, 2vw, 0.78rem); letter-spacing: 0.15em; line-height: 1.5; opacity: 0.9; }
+
+.lemas { display: flex; gap: 1.3rem; list-style: none; margin: 0; padding: 0; font-size: 0.8rem; opacity: 0.9; }
+.lemas li { display: flex; align-items: center; gap: 0.4rem; }
+.lemas li::before { content: ""; width: 0.35rem; height: 0.35rem; border-radius: 50%; background: var(--ouro); }
+
+/* ---------- Conteúdo: dois cards independentes ---------- */
+.conteudo {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--espaco-cards);
+  animation: entrar 0.7s ease-out;
+}
+
+/* ---------- Card do carrossel ---------- */
+.carrossel {
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  width: min(100%, var(--carrossel-largura));
+  height: var(--carrossel-altura);
+  border-radius: 0px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: linear-gradient(160deg, #0d2f78, #061a46);
+  margin-top: -15vh;
+}
+.carrossel-imagem {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.06);
+  transition: opacity 0.8s ease, transform 10s ease;
+}
+.carrossel-imagem.ativo { opacity: 1; transform: scale(1); }
+
+.carrossel-sombra {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(6, 21, 58, 0.95) 5%, rgba(6, 21, 58, 0.5) 45%, rgba(6, 21, 58, 0.1));
+}
+
+.carrossel-legenda {
+  position: absolute;
+  left: clamp(1rem, 3vw, 1.5rem);
+  right: clamp(1rem, 3vw, 1.5rem);
+  bottom: 2.6rem;
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+  animation: subir 0.6s ease;
+}
+.carrossel-escudo { color: var(--ouro); display: flex; flex-shrink: 0; }
+.carrossel-legenda h2 { margin: 0 0 0.3rem; font-size: clamp(1rem, 2.6vw, 1.25rem); line-height: 1.25; }
+.carrossel-legenda p { margin: 0; font-size: clamp(0.75rem, 1.8vw, 0.85rem); opacity: 0.85; }
+
+.carrossel-controlos {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.9rem;
+  display: flex;
+  justify-content: center;
+}
+
+
+/* ---------- Card do PIN / teclado ---------- */
+.cartao-pin {
+  flex-shrink: 0;
+  width: min(100%, var(--pin-largura));
+  background: #f6f8fd;
+  color: var(--azul-texto);
+  border-radius: 1.2rem;
+  padding: var(--pin-padding);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.35);
+}
+.cartao-titulo {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(1rem, 2.6vw, 1.15rem);
+  font-weight: 500;
+  line-height: 1.2;
+}
+.cartao-titulo strong { display: block; font-size: clamp(1.3rem, 3.4vw, 1.6rem); font-weight: 800; }
+
+.indicador-pin { display: flex; gap: 0.9rem; }
+.ponto {
+  position: relative;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #c3cde3;
+  transition: border-color 0.2s;
+}
+.ponto::after {
+  content: "";
+  position: absolute;
+  inset: 0.3rem;
+  border-radius: 50%;
+  background: var(--azul-texto);
+  transform: scale(0);
+  transition: transform 0.15s ease;
+}
+.ponto.ativo { border-color: var(--azul-texto); }
+.ponto.ativo::after { transform: scale(1); }
+.indicador-pin.tremer { animation: tremer 0.4s; }
+.indicador-pin.tremer .ponto { border-color: var(--erro); }
+
+.estado { margin: 0; min-height: 2.4em; text-align: center; font-size: 0.8rem; color: var(--azul-botao); }
+.estado.erro { color: var(--erro); }
+
+.teclado {
+  width: 100%;
+  max-width: var(--teclado-largura);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(0.4rem, 1.6vw, 0.6rem);
+}
+.tecla {
+  padding: clamp(0.55rem, 2.5vw, 0.8rem) 0;
+  font-size: clamp(1rem, 3.5vw, 1.2rem);
+  font-weight: 700;
+  color: var(--azul-texto);
+  background: var(--azul-tecla);
+  border: 0;
+  border-radius: 0.55rem;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 0.15s, transform 0.1s;
+}
+.tecla:hover:not(:disabled) { background: #d3ddf3; }
+.tecla:active:not(:disabled) { transform: scale(0.94); }
+.tecla:disabled { opacity: 0.45; cursor: not-allowed; }
+.tecla-limpar { font-size: 0.9rem; font-weight: 600; }
+.tecla-apagar { background: var(--azul-botao); color: #fff; }
+.tecla-apagar:hover:not(:disabled) { background: #0b2f80; }
+
+/* ---------- Rodapé ---------- */
+.rodape {
+  display: flex;
+  align-items: center;
+  font-size: 0.75rem;
+  color: #fff;
+}
+
+
+/* ---------- Animações ---------- */
+@keyframes entrar { from { opacity: 0; transform: translateY(1.2rem); } }
+@keyframes subir { from { opacity: 0; transform: translateY(0.8rem); } }
+@keyframes tremer {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-0.5rem); }
+  40%, 80% { transform: translateX(0.5rem); }
+}
+
+/* ---------- Responsividade ---------- */
+/* tablet e telemóvel: cards empilhados */
+@media (max-width: 860px) {
+  :root {
+    --carrossel-largura: 30rem;
+    --carrossel-altura: 14rem;
+    --pin-largura: 22rem;
+  }
+  .conteudo { flex-direction: column; justify-content: flex-start; }
+  .lemas { display: none; }
+}
+/* telemóveis pequenos */
+@media (max-width: 420px) {
+  :root {
+    --carrossel-altura: 12rem;
+    --pin-padding: 1.1rem;
+  }
+  .carrossel-legenda { bottom: 2.4rem; }
+  .carrossel-legenda p { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
