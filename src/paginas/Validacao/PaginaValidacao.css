@@ -1,0 +1,9 @@
+.validacao-dados { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+.validacao-rotulo { margin-top: 1rem; font-size: 0.9rem; letter-spacing: 0.15em; opacity: 0.8; }
+.validacao-rupe {
+  font-size: clamp(1.3rem, 4vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+.validacao-valor { font-size: clamp(2rem, 6vw, 3.4rem); font-weight: 800; color: var(--ouro, #f5b82e); }

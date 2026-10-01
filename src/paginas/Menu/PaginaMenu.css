@@ -1,0 +1,71 @@
+.menu {
+  --botao-largura: 35rem;
+  --botao-altura: 5rem;
+}
+.menu-botao {
+  width: var(--botao-largura);
+  height: var(--botao-altura);
+}
+
+
+.menu-botao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-size: clamp(1.1rem, 2.6vw, 1.4rem);
+  font-weight: 700;
+  color: #fff;
+  background: var(--azul-botao, #0d3a9c);
+  border: 2px solid var(--ouro, #f5b82e);
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: transform 0.1s, background 0.15s;
+}
+.menu-numero {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  font-size: 1.4rem;
+  color: white;
+}
+
+.menu {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  padding: 1.5rem;
+  color: #fff;
+  background: radial-gradient(ellipse at 30% 0%, var(--azul-medio, #0a2a6e), var(--azul-escuro, #06153a) 70%);
+  animation: entrar 0.7s ease-out;
+}
+.menu-titulo {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  font-weight: 700;
+}
+.menu-opcoes {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.menu-botao {
+  width: clamp(12rem, 30vw, 16rem);
+  height: clamp(8rem, 22vh, 11rem);
+  font-size: clamp(1.1rem, 2.6vw, 1.4rem);
+  font-weight: 700;
+  color: #fff;
+  background: var(--azul-botao, #0d3a9c);
+  border: 2px solid var(--ouro, #f5b82e);
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: transform 0.1s, background 0.15s;
+}
+.menu-botao:hover { background: #0b2f80; }
+.menu-botao:active { transform: scale(0.96); }
