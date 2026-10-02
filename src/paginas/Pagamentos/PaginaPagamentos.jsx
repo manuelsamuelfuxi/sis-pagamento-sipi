@@ -14,7 +14,7 @@ const MENSAGENS_ESTADO = {
   [ESTADOS_RUPE.EXPIRADO]: "Este RUPE está expirado.",
 };
 
-export default function PaginaPagamentos({ aoRupeValido, aoCancelar }) {
+export default function PaginaPagamentos({ aoRupeValido, aoCancelar, aceitarQualquerEstado = false }) {
   const { rupes } = useServicos();
   const [rupe, setRupe] = useState("");
   const [aProcessar, setAProcessar] = useState(false);
@@ -37,7 +37,7 @@ export default function PaginaPagamentos({ aoRupeValido, aoCancelar }) {
       const dados = await rupes.consultar(rupe);
       if (!ativo.current) return;
 
-      if (dados.estado !== ESTADOS_RUPE.ABERTO) {
+      if (!aceitarQualquerEstado && dados.estado !== ESTADOS_RUPE.ABERTO) {
         setErro(MENSAGENS_ESTADO[dados.estado] ?? "Este RUPE não está disponível para pagamento.");
         setRupe("");
         return;
@@ -50,7 +50,7 @@ export default function PaginaPagamentos({ aoRupeValido, aoCancelar }) {
     } finally {
       if (ativo.current) setAProcessar(false);
     }
-  }, [rupe, aProcessar, rupes, aoRupeValido]);
+  }, [rupe, aProcessar, rupes, aoRupeValido, aceitarQualquerEstado]);
 
   useEffect(() => {
     const aoPremir = (e) => {

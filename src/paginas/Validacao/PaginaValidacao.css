@@ -6,4 +6,8 @@
   letter-spacing: 0.08em;
   font-variant-numeric: tabular-nums;
 }
-.validacao-valor { font-size: clamp(2rem, 6vw, 3.4rem); font-weight: 800; color: var(--ouro, #f5b82e); }
+.validacao-valor {
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  font-weight: 800;
+  color: white;
+}

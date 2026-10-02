@@ -1,0 +1,13 @@
+.selo-estado {
+  padding: 0.4rem 1.6rem;
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  border: 2px solid transparent;
+  border-radius: 999px;
+}
+.selo-aberto { background: var(--azul-botao, #0d3a9c); border-color: var(--ouro, #f5b82e); }
+.selo-pago { background: #1e9e57; }
+.selo-expirado { background: var(--erro, #d6334f); }
