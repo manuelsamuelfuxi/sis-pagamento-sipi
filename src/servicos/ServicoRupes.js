@@ -9,16 +9,21 @@ export const CODIGOS_ERRO_RUPE = {
   FORMATO_INVALIDO: "FORMATO_INVALIDO",
   JA_PAGO: "JA_PAGO",
   EXPIRADO: "EXPIRADO",
+  SERVICO_INDISPONIVEL: "SERVICO_INDISPONIVEL",
+  ERRO_DESCONHECIDO: "ERRO_DESCONHECIDO",
 };
 
 export class ErroRupe extends Error {
-  constructor(codigo) {
+  constructor(codigo, causa) {
     super(codigo);
+    this.name = "ErroRupe";
     this.codigo = codigo;
+    if (causa !== undefined) this.causa = causa;
   }
 }
 
 export class ServicoRupes {
+  // devolve { rupe, estado, valor } ou lança ErroRupe
   async consultar(rupe) {
     throw new Error("consultar não implementado");
   }

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useServicos } from "../../contexto/ContextoServicos";
 import { ESTADOS_RUPE, CODIGOS_ERRO_RUPE } from "../../servicos/ServicoRupes";
+import TecladoNumerico from "../../componentes/TecladoNumerico";
 import "./PaginaPagamentos.css";
 
 const TAMANHO_RUPE = 20;
@@ -29,6 +30,21 @@ export default function PaginaPagamentos({ aoRupeValido, aoCancelar, aceitarQual
     };
   }, []);
 
+  // ações partilhadas entre o teclado no ecrã e o teclado físico
+  const adicionarDigito = useCallback((d) => {
+    setErro("");
+    setRupe((r) => (r.length < TAMANHO_RUPE ? r + d : r));
+  }, []);
+
+  const apagarDigito = useCallback(() => {
+    setRupe((r) => r.slice(0, -1));
+  }, []);
+
+  const limpar = useCallback(() => {
+    setRupe("");
+    setErro("");
+  }, []);
+
   const confirmar = useCallback(async () => {
     if (rupe.length !== TAMANHO_RUPE || aProcessar) return;
     setAProcessar(true);
@@ -52,16 +68,14 @@ export default function PaginaPagamentos({ aoRupeValido, aoCancelar, aceitarQual
     }
   }, [rupe, aProcessar, rupes, aoRupeValido, aceitarQualquerEstado]);
 
+  // teclado físico + colar (desktop)
   useEffect(() => {
     const aoPremir = (e) => {
       if (aProcessar) return;
       if (/^\d$/.test(e.key)) {
-        if (!e.repeat) {
-          setErro("");
-          setRupe((r) => (r.length < TAMANHO_RUPE ? r + e.key : r));
-        }
+        if (!e.repeat) adicionarDigito(e.key);
       } else if (e.key === "Backspace") {
-        setRupe((r) => r.slice(0, -1));
+        apagarDigito();
       } else if (e.key === "Enter" && !e.repeat) {
         confirmar();
       } else if (e.key === "Escape" && !e.repeat) {
@@ -84,7 +98,7 @@ export default function PaginaPagamentos({ aoRupeValido, aoCancelar, aceitarQual
       window.removeEventListener("keydown", aoPremir);
       window.removeEventListener("paste", aoColar);
     };
-  }, [aProcessar, confirmar, aoCancelar]);
+  }, [aProcessar, confirmar, aoCancelar, adicionarDigito, apagarDigito]);
 
   return (
     <div className="pagamento">
@@ -105,6 +119,13 @@ export default function PaginaPagamentos({ aoRupeValido, aoCancelar, aceitarQual
         {aProcessar ? "A verificar..." : erro}
       </p>
 
+      <TecladoNumerico
+        aoDigitar={adicionarDigito}
+        aoApagar={apagarDigito}
+        aoLimpar={limpar}
+        desativado={aProcessar}
+      />
+
       <div className="pagamento-botoes">
         <button
           type="button"
@@ -116,17 +137,6 @@ export default function PaginaPagamentos({ aoRupeValido, aoCancelar, aceitarQual
         </button>
         <button type="button" className="botao-pag botao-cancelar" onClick={aoCancelar}>
           Cancelar
-        </button>
-        <button
-          type="button"
-          className="botao-pag botao-limpar"
-          disabled={aProcessar}
-          onClick={() => {
-            setRupe("");
-            setErro("");
-          }}
-        >
-          Limpar
         </button>
       </div>
     </div>
